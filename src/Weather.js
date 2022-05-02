@@ -3,6 +3,7 @@ import axios from "axios";
 import "./Weather.css";
 import WeatherIcon from "./WeatherIcon";
 import TemperatureUnit from "./TemperatureUnit";
+import FormattedDate from "./FormattedDate";
 export default function Weather() {
   const [city, setCity] = useState("New York");
   const [weatherInfo, setWeatherInfo] = useState({ loaded: false });
@@ -49,7 +50,9 @@ export default function Weather() {
         </form>
         <h1>{weatherInfo.city}</h1>
         <ul>
-          <li>{weatherInfo.date.getDay()}</li>
+          <li>
+            <FormattedDate date={weatherInfo.date} />
+          </li>
           <li className="text-capitalize"> {weatherInfo.description}</li>
         </ul>
         <div className="row">
