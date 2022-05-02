@@ -1,43 +1,76 @@
-import React from "react";
+import React, { useState } from "react";
+import axios from "axios";
 import "./Weather.css";
+import WeatherIcon from "./WeatherIcon";
+import TemperatureUnit from "./TemperatureUnit";
 export default function Weather() {
-  return (
-    <div className="Weather">
-      <form>
+  const [city, setCity] = useState("New York");
+  const [weatherInfo, setWeatherInfo] = useState({ loaded: false });
+  function searchWeather(response) {
+    setWeatherInfo({
+      temperature: response.data.main.temp,
+      city: response.data.name,
+      humidity: response.data.main.humidity,
+      wind: response.data.wind.speed,
+      description: response.data.weather[0].description,
+      icon: response.data.weather[0].icon,
+      date: new Date(response.data.dt * 1000),
+      loaded: true,
+    });
+  }
+  function handleSubmit(event) {
+    event.preventDefault();
+    let unit = "metric";
+    let apiKey = "68548d6af374817b9b8a629525c6ac52";
+    let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=${unit}`;
+    axios.get(apiUrl).then(searchWeather);
+  }
+  function handleCity(event) {
+    setCity(event.target.value);
+  }
+  if (weatherInfo.loaded) {
+    return (
+      <div className="Weather">
+        <form onSubmit={handleSubmit}>
+          <div className="row">
+            <div className="col-9">
+              <input
+                type="input"
+                placeholder="enter a city..."
+                className="form-control"
+                autoFocus={true}
+                onChange={handleCity}
+              />
+            </div>
+            <div className="col-3">
+              <input type="submit" value="Search" className="btn btn-primary" />
+            </div>
+          </div>
+        </form>
+        <h1>{weatherInfo.city}</h1>
+        <ul>
+          <li>{weatherInfo.date.getDay()}</li>
+          <li className="text-capitalize"> {weatherInfo.description}</li>
+        </ul>
         <div className="row">
-          <div className="col-9">
-            <input
-              type="input"
-              placeholder="enter a city..."
-              className="form-control"
-              autoFocus={true}
-            />
+          <div className="col-6">
+            <WeatherIcon value={weatherInfo.icon} />
+            <TemperatureUnit value={weatherInfo.temperature} />
           </div>
-          <div className="col-3">
-            <input type="submit" value="Search" className="btn btn-primary" />
+          <div className="col-6">
+            <ul>
+              <li>Humidity: {weatherInfo.humidity}%</li>
+              <li>Wind: {weatherInfo.wind} km/h</li>
+            </ul>
           </div>
-        </div>
-      </form>
-      <h1>New York</h1>
-      <ul>
-        <li>Saturday 19:08</li>
-        <li>Clear Sky</li>
-      </ul>
-      <div className="row">
-        <div className="col-6">
-          <img
-            src="https://ssl.gstatic.com/onebox/weather/64/partly_cloudy.png"
-            alt=""
-          />
-          <span>16°C</span>
-        </div>
-        <div className="col-6">
-          <ul>
-            <li>Humidity: 29%</li>
-            <li>Wind: 4.63 km/h</li>
-          </ul>
         </div>
       </div>
-    </div>
-  );
+    );
+  } else {
+    let unit = "metric";
+    let apiKey = "68548d6af374817b9b8a629525c6ac52";
+    let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=${unit}`;
+    axios.get(apiUrl).then(searchWeather);
+    return "Loading";
+  }
 }
