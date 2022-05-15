@@ -1,6 +1,7 @@
 .App {
-  max-width: 500px;
+  max-width: 600px;
   margin: 20px auto 0 auto;
+  min-width: 510px;
 }
 .App p {
   font-size: 12px;

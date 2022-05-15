@@ -4,6 +4,7 @@ import "./Weather.css";
 import WeatherIcon from "./WeatherIcon";
 import TemperatureUnit from "./TemperatureUnit";
 import FormattedDate from "./FormattedDate";
+import Forecast from "./Forecast";
 export default function Weather() {
   const [city, setCity] = useState("New York");
   const [weatherInfo, setWeatherInfo] = useState({ loaded: false });
@@ -17,6 +18,7 @@ export default function Weather() {
       icon: response.data.weather[0].icon,
       date: new Date(response.data.dt * 1000),
       loaded: true,
+      coords: response.data.coord,
     });
   }
   function handleSubmit(event) {
@@ -67,6 +69,7 @@ export default function Weather() {
             </ul>
           </div>
         </div>
+        <Forecast coords={weatherInfo.coords} />
       </div>
     );
   } else {
