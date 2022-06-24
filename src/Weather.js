@@ -57,7 +57,7 @@ export default function Weather() {
           </li>
           <li className="text-capitalize"> {weatherInfo.description}</li>
         </ul>
-        <div className="row">
+        <div className="row weather_info">
           <div className="col-6">
             <WeatherIcon value={weatherInfo.icon} />
             <TemperatureUnit value={weatherInfo.temperature} />

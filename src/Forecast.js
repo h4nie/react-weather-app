@@ -32,8 +32,12 @@ export default function Forecast(props) {
                     <WeatherIcon value={daily.weather[0].icon} />
                   </div>
                   <div>
-                    <strong>{Math.round(daily.temp.max)}</strong>
-                    <span>{Math.round(daily.temp.min)}</span>
+                    <strong className="forecast_max">
+                      {Math.round(daily.temp.max)}°
+                    </strong>
+                    <span className="forecast_min">
+                      {Math.round(daily.temp.min)}°
+                    </span>
                   </div>
                 </div>
               );

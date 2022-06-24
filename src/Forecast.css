@@ -4,3 +4,9 @@
 .Forecast img {
   width: 50px;
 }
+.forecast_max {
+  margin-right: 5px;
+}
+.forecast_min {
+  margin-left: 5px;
+}

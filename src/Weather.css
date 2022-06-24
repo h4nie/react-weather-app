@@ -2,6 +2,8 @@
   border: 1px solid gray;
   border-radius: 5px;
   padding: 20px;
+  background-color: white;
+  margin-top: 100px;
 }
 .Weather h1 {
   margin: 15px 0 0 0;
@@ -12,4 +14,8 @@
 }
 .Weather li {
   list-style: none;
+}
+.weather_info {
+  display: flex;
+  align-items: center;
 }
